@@ -22,10 +22,7 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
     val navigateToDetailFragment
         get() = _navigateToDetailFragment
 
-    private val mockData = false
-    private val _mockAsteroids = MutableLiveData<List<Asteroid>>()
-    val mockAsteroids : LiveData<List<Asteroid>>
-        get() = _mockAsteroids
+
 
     init {
 
