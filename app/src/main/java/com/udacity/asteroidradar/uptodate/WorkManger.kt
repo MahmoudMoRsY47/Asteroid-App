@@ -20,7 +20,7 @@ class WorkManger(appContext: Context, params: WorkerParameters):
         val repository = AsteroidRepository(database)
 
         return try {
-            repository.refreshAsteroids()
+            repository.refresh()
             Result.success()
 
         } catch (e: HttpException) {

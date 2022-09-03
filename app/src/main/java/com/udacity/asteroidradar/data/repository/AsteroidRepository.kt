@@ -14,17 +14,17 @@ import kotlinx.coroutines.withContext
 class AsteroidRepository(private val db: AsteroidDatabase) {
 
     val asteroids: LiveData<List<Asteroid>> =
-        Transformations.map(db.dao.getAll()) {
+        Transformations.map(db.dao.getData()) {
             it.asAsteroids()
         }
 
-    suspend fun refreshAsteroids() {
+    suspend fun refresh() {
         withContext(Dispatchers.IO) {
             val asteroids = API.getAsteroids()
-            db.dao.insertAll(asteroids.asAsteroidEntities())
+            db.dao.insertData(asteroids.asAsteroidEntities())
         }
     }
-    suspend fun getPictureOfDay(): PictureOfDay {
+    suspend fun getPicture(): PictureOfDay {
         lateinit var pictureOfDay: PictureOfDay
         withContext(Dispatchers.IO) {
             pictureOfDay = API.getPictureOfDay()

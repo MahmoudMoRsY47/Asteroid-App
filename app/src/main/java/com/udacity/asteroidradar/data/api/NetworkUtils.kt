@@ -14,7 +14,7 @@ fun parseAsteroidsJsonResult(jsonResult: JSONObject): ArrayList<Asteroid> {
 
     val asteroidList = ArrayList<Asteroid>()
 
-    val nextSevenDaysFormattedDates = getNextSevenDaysFormattedDates()
+    val nextSevenDaysFormattedDates = dataOfSevenDays()
     for (formattedDate in nextSevenDaysFormattedDates) {
         if (nearEarthObjectsJson.has(formattedDate)) {
             val dateAsteroidJsonArray = nearEarthObjectsJson.getJSONArray(formattedDate)
@@ -46,7 +46,7 @@ fun parseAsteroidsJsonResult(jsonResult: JSONObject): ArrayList<Asteroid> {
     return asteroidList
 }
 
-private fun getNextSevenDaysFormattedDates(): ArrayList<String> {
+private fun dataOfSevenDays(): ArrayList<String> {
     val formattedDateList = ArrayList<String>()
 
     val calendar = Calendar.getInstance()
