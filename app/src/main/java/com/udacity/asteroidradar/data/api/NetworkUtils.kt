@@ -1,5 +1,6 @@
 package com.udacity.asteroidradar.data.api
 
+import android.annotation.SuppressLint
 import android.os.Build
 import com.udacity.asteroidradar.data.model.Asteroid
 import com.udacity.asteroidradar.util.Constants
@@ -59,7 +60,6 @@ private fun dataOfSevenDays(): ArrayList<String> {
 
     return formattedDateList
 }
-
 fun List<Asteroid>.asAsteroidEntities() : List<AsteroidEntity> {
     return map {
         AsteroidEntity(
