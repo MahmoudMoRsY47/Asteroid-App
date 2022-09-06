@@ -13,8 +13,8 @@ fun parseAsteroidsJsonResult(jsonResult: JSONObject): ArrayList<Asteroid> {
 
     val asteroidList = ArrayList<Asteroid>()
 
-    val nextSevenDaysFormattedDates = dataOfOneDay()
-    for (formattedDate in nextSevenDaysFormattedDates) {
+    val dataOfOneDayFormated = dataOfOneDay()
+    for (formattedDate in dataOfOneDayFormated) {
         if (nearEarthObjectsJson.has(formattedDate)) {
             val dateAsteroidJsonArray = nearEarthObjectsJson.getJSONArray(formattedDate)
 
