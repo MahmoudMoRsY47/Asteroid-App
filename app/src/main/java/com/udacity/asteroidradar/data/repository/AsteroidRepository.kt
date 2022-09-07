@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import com.udacity.asteroidradar.data.api.API
 import com.udacity.asteroidradar.data.api.asAsteroidEntities
+import com.udacity.asteroidradar.data.api.getSeventhDay
+import com.udacity.asteroidradar.data.api.getToday
 import com.udacity.asteroidradar.data.database.AsteroidDatabase
 import com.udacity.asteroidradar.data.database.asAsteroids
 import com.udacity.asteroidradar.data.model.Asteroid
@@ -13,8 +15,10 @@ import kotlinx.coroutines.withContext
 
 class AsteroidRepository(private val db: AsteroidDatabase) {
 
+    var startDate= getToday()
+    var endDate= getToday()
     val asteroids: LiveData<List<Asteroid>> =
-        Transformations.map(db.dao.getData()) {
+        Transformations.map(db.dao.getData(startDate,endDate)) {
             it.asAsteroids()
         }
 
