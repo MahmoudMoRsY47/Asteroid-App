@@ -12,7 +12,8 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
 
     private val database = AsteroidDatabase.getInstance(app)
     private val repository = AsteroidRepository(database)
-    val asteroids = repository.asteroids
+    val allAsteroids = repository.allAsteroids
+    val oneAsteroids = repository.oneDayAsteroids
 
     private val _pictureOfDay = MutableLiveData<PictureOfDay>()
     val pictureOfDay: LiveData<PictureOfDay>
@@ -26,7 +27,7 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
 
     init {
 
-            refresh()
+            refreshSevent()
 
         }
 
@@ -41,10 +42,10 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
         _navigateToDetailFragment.value = null
     }
 
-    private fun refresh() {
+     private fun refreshSevent() {
         viewModelScope.launch {
             launch { try {
-                repository.refresh()
+                repository.refreshSeven()
 
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -56,6 +57,7 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
             } }
         }
     }
+
 
 
 }

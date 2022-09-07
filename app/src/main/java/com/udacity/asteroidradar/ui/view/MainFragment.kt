@@ -13,37 +13,34 @@ import com.udacity.asteroidradar.ui.viewmodel.MainViewModel
 
 class MainFragment : Fragment() {
 
+    lateinit var binding:FragmentMainBinding
+    lateinit var adapter: AsteroidAdapter
     private val viewModel: MainViewModel by lazy {
         ViewModelProvider(this).get(MainViewModel::class.java)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val binding = FragmentMainBinding.inflate(inflater)
+        binding = FragmentMainBinding.inflate(inflater)
         binding.lifecycleOwner = this
-
         binding.viewModel = viewModel
 
-
-        val adapter = AsteroidAdapter(OnItemClick { asteroidId ->
+         adapter = AsteroidAdapter(OnItemClick { asteroidId ->
             viewModel.onAsteroidItemClick(asteroidId)
         })
+
         binding.asteroidRecycler.adapter = adapter
-        viewModel.asteroids.observe(viewLifecycleOwner, { asteroids ->
+        viewModel.allAsteroids.observe(viewLifecycleOwner) { asteroids ->
             adapter.submitList(asteroids)
-        })
+        }
 
-
-        viewModel.navigateToDetailFragment.observe(viewLifecycleOwner,  { asteroid ->
+        viewModel.navigateToDetailFragment.observe(viewLifecycleOwner) { asteroid ->
             asteroid?.let {
                 findNavController().navigate(MainFragmentDirections.actionShowDetail(it))
                 viewModel.onDetailFragmentNavigated()
             }
-        })
-
-
+        }
         setHasOptionsMenu(true)
-
         return binding.root
     }
 
@@ -53,6 +50,22 @@ class MainFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        when (item.itemId) {
+            R.id.today -> {
+                binding.asteroidRecycler.adapter = adapter
+                viewModel.oneAsteroids.observe(viewLifecycleOwner) { asteroids ->
+                    adapter.submitList(asteroids)
+                }
+            }
+            R.id.week -> {
+                binding.asteroidRecycler.adapter = adapter
+                viewModel.allAsteroids.observe(viewLifecycleOwner) { asteroids ->
+                    adapter.submitList(asteroids)
+                }
+            }
+
+        }
         return true
     }
 }

@@ -10,6 +10,10 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 
 object API {
+
+    var startDate= getToday()
+    var endDate= getToday()
+
     private val moshi = Moshi.Builder()
         .add(KotlinJsonAdapterFactory())
         .build()
@@ -22,8 +26,15 @@ object API {
 
     val apiService = retrofit.create(AsteroidService::class.java)
 
-    suspend fun getAsteroids() : List<Asteroid> {
+    suspend fun getAllAsteroid() : List<Asteroid> {
         val responseStr = apiService.getAsteroids("","", Constants.API_KEY)
+        val responseJsonObject = JSONObject(responseStr)
+
+        return parseAsteroidsJsonResult(responseJsonObject)
+    }
+
+    suspend fun getOneDayAsteroid() : List<Asteroid> {
+        val responseStr = apiService.getAsteroids(startDate, endDate, Constants.API_KEY)
         val responseJsonObject = JSONObject(responseStr)
 
         return parseAsteroidsJsonResult(responseJsonObject)
